@@ -23,4 +23,26 @@ public class ImageMapper {
     public List<ImageDTO> convertToDTOList(List<Image> images) {
         return images.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
+
+    public Image convertToEntity(ImageDTO imageDTO) {
+        Image image = new Image();
+        image.setId(imageDTO.getId());
+        image.setUrl(imageDTO.getUrl());
+        if (imageDTO.getArticleIds() != null) {
+            List<Article> articles = imageDTO.getArticleIds().stream()
+                    .map(articleId -> {
+                        Article article = new Article();
+                        article.setId(articleId);
+                        return article;
+                    })
+                    .collect(Collectors.toList());
+            image.setArticles(articles);
+        }
+
+        return image;
+    }
+
+    public List<Image> convertToEntityList(List<ImageDTO> imageDTOs) {
+        return imageDTOs.stream().map(this::convertToEntity).collect(Collectors.toList());
+    }
 }

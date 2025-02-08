@@ -1,9 +1,12 @@
 package org.wildcodeschool.myblog.service;
 
 import org.springframework.stereotype.Service;
+import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
+import org.wildcodeschool.myblog.dto.ArticleDTO;
 import org.wildcodeschool.myblog.dto.ImageDTO;
 import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.mapper.ImageMapper;
+import org.wildcodeschool.myblog.model.Article;
 import org.wildcodeschool.myblog.model.Image;
 import org.wildcodeschool.myblog.repository.ArticleRepository;
 import org.wildcodeschool.myblog.repository.ImageRepository;
@@ -34,7 +37,8 @@ public class ImageService {
         return imageMapper.convertToDTO(image);
     }
 
-    public ImageDTO createImage(Image image) {
+    public ImageDTO createImage(ImageDTO imageDTO) {
+        Image image = imageMapper.convertToEntity(imageDTO);
         Image savedImage = imageRepository.save(image);
         return imageMapper.convertToDTO(savedImage);
     }
